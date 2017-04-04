@@ -20,8 +20,12 @@ String s;
 Process p;
 try {
 	
-    		System.out.println("/opt/pop/conf/ESB_healthcheck.sh"+" ");
-        	p = Runtime.getRuntime().exec("/opt/pop/conf/ESB_healthcheck.sh");
+	 String baseFileLocation =  System.getProperty("POP_CONF_LOCATION");
+ 	 if(baseFileLocation == null )
+	  baseFileLocation =  "/opt/pop/conf";
+	  
+    		System.out.println(baseFileLocation+"/ESB_healthcheck.sh"+" ");
+        	p = Runtime.getRuntime().exec(baseFileLocation+"/ESB_healthcheck.sh"+" ");
         
 
     BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
