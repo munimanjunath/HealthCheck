@@ -33,8 +33,12 @@ if(params.length() > 1)
   str+=  "SOAPAction:\""+ request.getParameter("SOAPAction")+"\"  "+request.getParameter("Authentication")+"  "+request.getParameter("contentType")+System.lineSeparator();
   System.out.println(str);
   try {
+  
+      String baseFileLocation =  System.getProperty("POP_CONF_LOCATION");
+ 	 if(baseFileLocation == null )
+	  baseFileLocation =  "/opt/pop/conf";
 	  
-	   Files.write(Paths.get("/opt/pop/conf/ESB_healthcheck.conf"), str.getBytes(), StandardOpenOption.APPEND);
+	   Files.write(Paths.get(baseFileLocation+"/ESB_healthcheck.conf"), str.getBytes(), StandardOpenOption.APPEND);
 	
 	
 	}catch (Exception e) {
@@ -45,7 +49,7 @@ if(params.length() > 1)
   BufferedWriter writer = null;
   try
   {
-      writer = new BufferedWriter( new FileWriter( "/opt/pop/conf/healthcheck_scripts/"+request.getParameter("ServiceName")+".xml"));
+      writer = new BufferedWriter( new FileWriter(baseFileLocation+"/healthcheck_scripts/"+request.getParameter("ServiceName")+".xml"));
       writer.write( request.getParameter("serviceRequest"));
 
   }
