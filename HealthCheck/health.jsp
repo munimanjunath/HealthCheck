@@ -7,37 +7,7 @@
 <title>Health Check Application</title>
 </head>
 <body>
-<% 
-	
-	String profile=System.getProperty("appdynamics.agent.tierName");
-	String serverprefix=null;
-	if(profile == null){
-		profile =	System.getProperty("Container.Type");
-		System.out.println("profile"+profile);
-	}
-	String server = null;
-	if(profile == null) {
-		profile="PROD-DSS";
-	   server = "DSS Server" ;
-	}
-	else
-	   if(profile.indexOf("ESB") > -1 ){
-	   server = "ESB Server";
-	   serverprefix="ESB";
-	   }
-	   else if(profile.indexOf("CSP") > -1 )
-	   {
-		    server = "CSP Server";	
-		   serverprefix="CSP";
-		   }
-	   else if(profile.indexOf("JDSS") > -1 )
-	   {
-		    server = "JDSS Server";
-		   serverprefix="JDSS";
-	    }
-	   else server = profile ;
 
-%>
 <table>
 <tr>
 <th colspan="2"><%=server%></th>
@@ -49,21 +19,10 @@
 String s;
 Process p;
 try {
-	if(profile == null){
-	 String[] cmd = new String[3];
-	            
-	                cmd[0] = "cmd.exe" ;
-	                cmd[1] = "/C" ;
-	                cmd[2] = "C:\\deploy\\START_DIAGNOSTICS.bat";
-	                    		System.out.println("Print before calling the process");
-
-            			 p = Runtime.getRuntime().exec(cmd);
-	                    		System.out.println("Print after calling the process");
-        }
-    else {
-    		System.out.println("/opt/pop/conf/"+serverprefix+"_healthcheck.sh"+" ");
-        	p = Runtime.getRuntime().exec("/opt/pop/conf/"+serverprefix+"_healthcheck.sh"+" ");
-        }
+	
+    		System.out.println("/opt/pop/conf/ESB_healthcheck.sh"+" ");
+        	p = Runtime.getRuntime().exec("/opt/pop/conf/ESB_healthcheck.sh");
+        
 
     BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
     BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
